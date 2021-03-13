@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:AtroFree.ViewModels"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="AtroFree.Views.Statistics"
+             BackgroundColor="{StaticResource Key=BackgroundPage}">
+
+    <ContentPage.BindingContext>
+        <vm:StatisticsViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Estadisticas diarias"
+                   Style="{StaticResource Key=Title}"/>
+
+            <Label Text="Selecciona un dia de la semana para ver tu progreso en ese día o elige la comparación de los valores."
+                   Style="{StaticResource Key=Subtitle}"/>
+            <Picker Title="Selecciona un día  o la comparación"
+                    HorizontalOptions="Center"
+                    Grid.Column="1"
+                    ItemsSource="{Binding Options}"
+                    SelectedIndex="{Binding SelectedIndex}"
+                    SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+            <Label Text="No tienes datos aun"
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   IsVisible="{Binding Empty}"/>
+            <Frame Margin="10">
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding MinSliderValue}"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"/>
+                        <Label Text="{Binding MaxSliderValue}"
+                       FontAttributes="Bold"
+                       Grid.Column="1"
+                       HorizontalOptions="Center"/>
+
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid"
+                                         Binding="{Binding Empty}"
+                                         Value="True">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                    <microcharts:ChartView x:Name="chart" Chart="{Binding BarChart}" HeightRequest="400">
+                        <microcharts:ChartView.Triggers>
+                            <DataTrigger TargetType="microcharts:ChartView"
+                                 Binding="{Binding Empty}"
+                                 Value="True">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                        </microcharts:ChartView.Triggers>
+                    </microcharts:ChartView>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Mínimo"
+                       FontAttributes="Bold"
+                       FontSize="Large"
+                       HorizontalOptions="Center">
+                        </Label>
+                        <Label Text="Máximo"
+                       FontAttributes="Bold"
+                       FontSize="Large"
+                       Grid.Column="1"
+                       HorizontalOptions="Center"/>
+
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid"
+                                         Binding="{Binding Empty}"
+                                         Value="True">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                </StackLayout>
+
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame"
+                                 Binding="{Binding Empty}"
+                                 Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewModel="clr-namespace:AtroFree.ViewModels"
+             x:Class="AtroFree.Views.Configuration"
+             Title="Configuración"
+             BackgroundColor="{StaticResource Key=BackgroundPage}">
+
+    <ContentPage.BindingContext>
+        <viewModel:ConfigurationViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Configuración de Límites"
+                   Style="{StaticResource Key=Title}"/>
+
+            <Label Text="El ajuste predeterminado usa valores por default, al deseleccionar esta opción se activará la opción de ajuste manual"
+                   Style="{StaticResource Key=Subtitle}"/>
+
+            <Frame Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Predeterminado:"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           HorizontalOptions="End"/>
+                    <Switch IsToggled="{Binding DefaultData}"
+                            Grid.Column="1" Toggled="Switch_Toggled"/>
+                </Grid>
+            </Frame>
+
+            <Frame Margin="10,0,10,10">
+                <StackLayout>
+                    <Label Text="Ajuste Manual"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="20"/>
+
+                    <BoxView BackgroundColor="Black" HeightRequest="1"
+                             Margin="0,0,0,20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Text="Minimo:"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           HorizontalOptions="End"
+                               VerticalOptions="Center"/>
+                        <Entry Placeholder="Minimo"
+                               Grid.Column="1"
+                               VerticalOptions="Center"
+                               Keyboard="Numeric"
+                               Text="{Binding MinValue}"/>
+
+                        <Label Text="Maximo:"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               HorizontalOptions="End"
+                               Grid.Row="1"
+                               VerticalOptions="Center"/>
+                        <Entry Placeholder="Maximo"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               VerticalOptions="Center"
+                               Keyboard="Numeric"
+                               Text="{Binding MaxValue}"/>
+                    </Grid>
+
+                    <Button Text="Guardar"
+                            Margin="0,20,0,0"
+                            HorizontalOptions="End"
+                            Style="{StaticResource Key=Accept}"
+                            Command="{Binding SaveCommand}"/>
+                </StackLayout>
+
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame"
+                                 Binding="{Binding DefaultData}"
+                                 Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+
+                    <DataTrigger TargetType="Frame"
+                                 Binding="{Binding DefaultData}"
+                                 Value="False">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

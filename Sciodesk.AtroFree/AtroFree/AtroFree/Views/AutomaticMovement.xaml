@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewModel="clr-namespace:AtroFree.ViewModels"
+             x:Class="AtroFree.Views.AutomaticMovement"
+             BackgroundColor="{StaticResource Key=BackgroundPage}">
+
+    <ContentPage.BindingContext>
+        <viewModel:AutomaticMovementViewModel/>
+    </ContentPage.BindingContext>
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Desconectar" Command="{Binding DisconnectCommand}"/>
+    </ContentPage.ToolbarItems>-->
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Rutina Predeterminada"
+                   Style="{StaticResource Key=Title}"/>
+
+                <Label Text="Cuando la pantalla lo indique, el dispositivo se moverá en la dirección que se indique."
+                   Style="{StaticResource Key=Subtitle}" IsVisible="{Binding Connected}"/>
+
+                <Frame Margin="10" IsVisible="{Binding Connected}">
+                    <StackLayout>
+                        <Image Aspect="AspectFill"
+                               HeightRequest="200">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="True">
+                                    <Setter Property="Source" Value="arriba.PNG"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="False">
+                                    <Setter Property="Source" Value="abajo.PNG"/>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Frame HorizontalOptions="Center">
+                            <Label TextColor="White"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="Large">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding UpDownValue}"
+                                                 Value="True">
+                                        <Setter Property="Text" Value="Arriba"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding UpDownValue}"
+                                                 Value="False">
+                                        <Setter Property="Text" Value="Abajo"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Key=Secondary}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Key=DenyColor}"/>
+                                </DataTrigger>
+                            </Frame.Triggers>
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Margin="10">
+                    <StackLayout>
+                        <Label Text="Conexión"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="20"/>
+
+                        <BoxView BackgroundColor="Black" HeightRequest="1"
+                             Margin="0,0,0,20"/>
+
+                        <Picker Title="Dispositivos Emparejados"
+                                ItemsSource="{Binding PairDevices}"
+                                SelectedIndex="{Binding SelectedIndex}"/>
+
+                        <Button Text="Conectar"
+                                Margin="5"
+                                Style="{StaticResource Key=Accept}"
+                                Command="{Binding ConnectCommand}"/>
+                    </StackLayout>
+                    <Frame.Triggers>
+                        <DataTrigger TargetType="Frame"
+                                     Binding="{Binding Connected}"
+                                     Value="True">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </Frame.Triggers>
+                </Frame>
+
+                <Frame Margin="10" IsVisible="{Binding Connected}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Text="Iniciar" 
+                                Style="{StaticResource Key=Accept}"
+                                Command="{Binding InitCycle}"
+                                Margin="10"/>
+                        <Button Text="Desconectar"
+                                Style="{StaticResource Key=Deny}"
+                                Grid.Column="1"
+                                Command="{Binding StopCycle}"
+                                Margin="10"/>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

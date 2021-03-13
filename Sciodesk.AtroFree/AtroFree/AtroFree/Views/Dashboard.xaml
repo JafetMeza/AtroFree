@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AtroFree.Views.Dashboard"
+             Title="AtroFree"
+             Shell.BackgroundColor="{StaticResource Primary}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="logo.PNG"
+                   Aspect="AspectFill"
+                   VerticalOptions="Center"
+                   Margin="0,40,0,20"/>
+            <Label Text="Auxiliar en la rehabilitación del miembro inferior"
+                   Style="{StaticResource Key=Subtitle}"
+                   FontSize="Large"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

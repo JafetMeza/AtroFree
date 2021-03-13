@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewModel="clr-namespace:AtroFree.ViewModels"
+             x:Class="AtroFree.Views.ManualMovement"
+             BackgroundColor="{StaticResource Key=BackgroundPage}">
+
+    <ContentPage.BindingContext>
+        <viewModel:ManualMovementViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Desconectar" Command="{Binding DisconnectCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Rutina Manual"
+                   Style="{StaticResource Key=Title}"/>
+
+                <Label Text="Considere que los maximos y minimos estan descritos en la configuración."
+                   Style="{StaticResource Key=Subtitle}"/>
+
+                <Frame Margin="10" IsVisible="{Binding Connected}">
+                    <StackLayout>
+                        <Image Aspect="AspectFill"
+                               HeightRequest="200">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="True">
+                                    <Setter Property="Source" Value="arriba.PNG"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="False">
+                                    <Setter Property="Source" Value="abajo.PNG"/>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Frame HorizontalOptions="Center">
+                            <Label TextColor="White"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="Large">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding UpDownValue}"
+                                                 Value="True">
+                                        <Setter Property="Text" Value="Arriba"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding UpDownValue}"
+                                                 Value="False">
+                                        <Setter Property="Text" Value="Abajo"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Key=Secondary}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding UpDownValue}"
+                                             Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Key=DenyColor}"/>
+                                </DataTrigger>
+                            </Frame.Triggers>
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Margin="10" IsVisible="{Binding Connected}">
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Slider VerticalOptions="Center"
+                                    ThumbColor="{StaticResource Key=Secondary}"
+                                    MaximumTrackColor="{StaticResource Key=Secondary}"
+                                    MinimumTrackColor="{StaticResource Key=Primary}"
+                                    ValueChanged="Slider_ValueChanged"
+                                    DragCompletedCommand="{Binding DragCompletedCommand}"
+                                    
+                                    Maximum="{Binding MaxSliderValue}"
+                                    Minimum="{Binding MinSliderValue}"
+                                    Value="{Binding SliderValue}"/>
+                            <Label Grid.Column="1"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center"
+                                   FontSize="18"
+                                   FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="{Binding SliderValue}"/>
+                                            <Span Text=" °"/>
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Margin="10" IsVisible="{Binding Connected}">
+                    <StackLayout>
+                        <Label Text="Conexión"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="20"/>
+
+                        <BoxView BackgroundColor="Black" HeightRequest="1"
+                             Margin="0,0,0,20"/>
+
+                        <Picker Title="Dispositivos Emparejados"
+                                ItemsSource="{Binding PairDevices}"
+                                SelectedIndex="{Binding SelectedIndex}"/>
+
+                        <Button Text="Conectar"
+                                Margin="5"
+                                Style="{StaticResource Key=Accept}"
+                                Command="{Binding ConnectCommand}"/>
+                    </StackLayout>
+                    <Frame.Triggers>
+                        <DataTrigger TargetType="Frame"
+                                     Binding="{Binding Connected}"
+                                     Value="False">
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                    </Frame.Triggers>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
