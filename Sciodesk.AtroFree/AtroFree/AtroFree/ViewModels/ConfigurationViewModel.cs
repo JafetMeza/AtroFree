@@ -1,4 +1,6 @@
 ﻿using AtroFree.Models;
+using AtroFree.Views;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -84,9 +86,9 @@ namespace AtroFree.ViewModels
                 {
                     int min = int.Parse(MinValue);
                     int max = int.Parse(MaxValue);
-                    if(min < 0 || min > 180 || max < 0 || max > 180)
+                    if(min < 0 || min > 180 || max < 0 || max > 120)
                     {
-                        await Application.Current.MainPage.DisplayAlert("Error", "El valor mínimo y máximo debe de estar entre los 0 y 180°.", "OK");
+                        await Application.Current.MainPage.DisplayAlert("Error", "El valor mínimo y máximo debe de estar entre los 0 y 120°.", "OK");
                         return;
                     }
                     var result = await Application.Current.MainPage.DisplayAlert("Guardar nueva configuración", "¿Deseas guardar los cambios?", "Si", "No");
@@ -108,7 +110,13 @@ namespace AtroFree.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Debes colocar números solamente", "OK");
             }
-        }); 
+        });
         #endregion
+
+        public ICommand ShowHelpCommand => new Command(async () =>
+        {
+            //Mostrar Popup de Ayuda
+            await PopupNavigation.Instance.PushAsync(new ConfigurationHelp());
+        });
     }
 }
