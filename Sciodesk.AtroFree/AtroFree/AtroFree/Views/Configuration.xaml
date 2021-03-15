@@ -9,6 +9,10 @@
     <ContentPage.BindingContext>
         <viewModel:ConfigurationViewModel/>
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ayuda" Order="Secondary" Command="{Binding ShowHelpCommand}"/>
+    </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout>

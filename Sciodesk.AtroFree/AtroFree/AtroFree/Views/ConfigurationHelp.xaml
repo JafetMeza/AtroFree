@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                  xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  x:Class="AtroFree.Views.ConfigurationHelp"
+                  BackgroundColor="#BC000000">
+    <Frame HorizontalOptions="Center" VerticalOptions="Center">
+        <StackLayout>
+            <Label Style="{StaticResource Key=Title}"
+                   Text="Valores Angulares"/>
+            <Image Source="img1.PNG"
+                   Aspect="AspectFill"
+                   VerticalOptions="Center"
+                   Margin="0,10,0,0"/>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>
