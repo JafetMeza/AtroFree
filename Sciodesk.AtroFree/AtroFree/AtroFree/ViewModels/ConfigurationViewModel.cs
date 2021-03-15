@@ -86,11 +86,12 @@ namespace AtroFree.ViewModels
                 {
                     int min = int.Parse(MinValue);
                     int max = int.Parse(MaxValue);
-                    if(min < 0 || min > 180 || max < 0 || max > 120)
+                    if(min < 0 || min > 15 || max < 20 || max > 120)
                     {
-                        await Application.Current.MainPage.DisplayAlert("Error", "El valor mínimo y máximo debe de estar entre los 0 y 120°.", "OK");
+                        await Application.Current.MainPage.DisplayAlert("Error", "El valor mínimo debe de estar entre los 0 y 15°.\nEl valor máximo debe de estar entre los 20 y 120°", "OK");
                         return;
                     }
+                    
                     var result = await Application.Current.MainPage.DisplayAlert("Guardar nueva configuración", "¿Deseas guardar los cambios?", "Si", "No");
                     if (result)
                     {
